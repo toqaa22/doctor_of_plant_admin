@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor_plan_admin/models/fertlizer_model.dart';
 import 'package:doctor_plan_admin/models/plant_model.dart';
+import 'package:doctor_plan_admin/toast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -21,9 +23,17 @@ class UploadCubit extends Cubit<UploadState> {
   TextEditingController plantHumidityController = TextEditingController();
   TextEditingController plantPriceController = TextEditingController();
   TextEditingController plantCategoryController = TextEditingController();
+  TextEditingController fertlizerNameController = TextEditingController();
+  TextEditingController fertlizerDescrpController = TextEditingController();
+  TextEditingController fertlizerPriceController = TextEditingController();
+  TextEditingController fertlizerTypeController = TextEditingController();
+
+
+
 
   String scanImage = '';
   PlantModel? plant;
+  FertilizerModel?fertilizer;
 
   Future<void> pickImageFromGallery() async {
     emit(UploadImageLoading());
@@ -42,7 +52,6 @@ class UploadCubit extends Cubit<UploadState> {
             .then((p0) async {
           await p0.ref.getDownloadURL().then((value) async {
             scanImage = value;
-            print(scanImage);
             emit(UploadImage());
           });
         });
@@ -87,6 +96,7 @@ class UploadCubit extends Cubit<UploadState> {
       await docRef.update({'ref': docRef});
 
       emit(AddProductSuccessfully());
+      showToast("Plant Uploaded");
       plantNameController.clear();
       plantDescrpController.clear();
       plantSizeController.clear();
@@ -97,6 +107,33 @@ class UploadCubit extends Cubit<UploadState> {
       scanImage = '';
     } catch (e) {
       print("Error uploading plant data: $e");
+    }
+  }
+  void uploadFertlizerData() async {
+    emit(AddProductLoading());
+    String fertlizerId = FirebaseFirestore.instance.collection('fertilizer').doc().id;
+    fertilizer = FertilizerModel(
+      type: fertlizerTypeController.text,
+        id: fertlizerId,
+        name: fertlizerNameController.text,
+        price: num.tryParse(fertlizerPriceController.text),
+        image: scanImage,
+        description: fertlizerDescrpController.text);
+    try {
+      DocumentReference docRef =
+      FirebaseFirestore.instance.collection('fertilizer').doc(fertlizerId);
+      await docRef.set(fertilizer!.toMap());
+      await docRef.update({'ref': docRef});
+
+      emit(AddProductSuccessfully());
+      showToast("Fertlizer Uploaded");
+      fertlizerNameController.clear();
+      fertlizerPriceController.clear();
+      fertlizerDescrpController.clear();
+      fertlizerTypeController.clear();
+      scanImage = '';
+    } catch (e) {
+      print("Error Fertlizer plant data: $e");
     }
   }
 }
