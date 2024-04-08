@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "996972065274",
+    "firebase_url": "https://doctor-of-plant-default-rtdb.firebaseio.com",
+    "project_id": "doctor-of-plant",
+    "storage_bucket": "doctor-of-plant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996972065274:android:af8b53e7f946a1a84f7443",
+        "android_client_info": {
+          "package_name": "com.doctorplantadmin.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCykA5_waoHHZFZcifksrfn9VJipfEIlNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996972065274:android:a5cedbc6a6a3bcbd4f7443",
+        "android_client_info": {
+          "package_name": "com.example.doctor_of_plant_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCykA5_waoHHZFZcifksrfn9VJipfEIlNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996972065274:android:a775bfbe54692ef44f7443",
+        "android_client_info": {
+          "package_name": "com.example.doctor_of_plant_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCykA5_waoHHZFZcifksrfn9VJipfEIlNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
