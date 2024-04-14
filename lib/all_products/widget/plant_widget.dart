@@ -19,10 +19,15 @@ class PlantWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(
-          plant: plantList[index].ref.path.split("/").first== "fertilizer"? null:plantList[index],
-                    fertilizerModel: plantList[index].ref.path.split("/").first== "fertilizer"? plantList[index]:null,
-        ),));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsPage(
+                plant: plantList[index].ref.path.split("/").first == "fertilizer" ? null : plantList[index],
+                fertilizerModel:
+                    plantList[index].ref.path.split("/").first == "fertilizer" ? plantList[index] : null,
+              ),
+            ));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -54,7 +59,10 @@ class PlantWidget extends StatelessWidget {
                   right: 0,
                   child: SizedBox(
                     height: 80.0,
-                    child: Image.network(plantList[index].image ?? ''),
+                    child: Image.network(
+                      plantList[index].image ?? '',
+                      errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                    ),
                   ),
                 ),
                 Positioned(
