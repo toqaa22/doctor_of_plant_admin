@@ -39,6 +39,7 @@ class AllProducts extends StatelessWidget {
                   Tab(text: 'All Fertlizers'),
                   Tab(text: 'All Plants'),
 
+
                 ],
               ),
             ),
@@ -70,6 +71,7 @@ class AllProducts extends StatelessWidget {
                                 index: index, plantList: cubit.plants));
                       }),
                 ),
+
 
               ],
             ),

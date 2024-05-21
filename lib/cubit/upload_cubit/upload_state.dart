@@ -8,3 +8,4 @@ final class UploadImage extends UploadState {}
 final class UploadImageLoading extends UploadState {}
 final class AddProductSuccessfully extends UploadState {}
 final class AddProductLoading extends UploadState {}
+final class AddDataSetLoading extends UploadState {}

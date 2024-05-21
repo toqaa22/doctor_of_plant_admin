@@ -10,7 +10,7 @@ class AddProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: BlocConsumer<UploadCubit, UploadState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -20,11 +20,12 @@ class AddProducts extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               bottom: TabBar(
-                // overlayColor: const MaterialStatePropertyAll(Color(0xFFC4D7E0)),
-                indicatorColor: Colors.white,
-                indicatorPadding: const EdgeInsets.symmetric(horizontal: -45),
-                indicator: BoxDecoration(
 
+                // overlayColor: const MaterialStatePropertyAll(Color(0xFFC4D7E0)),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                indicatorColor: Colors.white,
+                indicatorPadding: const EdgeInsets.symmetric(horizontal: -25),
+                indicator: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     shape: BoxShape.rectangle,
@@ -36,6 +37,7 @@ class AddProducts extends StatelessWidget {
                 tabs: const [
                   Tab(text: 'Add Plant'),
                   Tab(text: 'Add Fertlizer'),
+                  Tab(text: 'Add data set'),
 
                 ],
               ),
@@ -70,8 +72,8 @@ class AddProducts extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),                child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(Constants.primaryColor),
-                            shape: MaterialStatePropertyAll(
+                            backgroundColor: WidgetStatePropertyAll(Constants.primaryColor),
+                            shape: WidgetStatePropertyAll(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8)
                                 )
@@ -168,8 +170,8 @@ class AddProducts extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(Constants.primaryColor),
-                              shape: MaterialStatePropertyAll(
+                              backgroundColor: WidgetStatePropertyAll(Constants.primaryColor),
+                              shape: WidgetStatePropertyAll(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)
                                   )
@@ -208,8 +210,8 @@ class AddProducts extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),                child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(Constants.primaryColor),
-                            shape: MaterialStatePropertyAll(
+                            backgroundColor: WidgetStatePropertyAll(Constants.primaryColor),
+                            shape: WidgetStatePropertyAll(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8)
                                 )
@@ -274,8 +276,8 @@ class AddProducts extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(Constants.primaryColor),
-                              shape: MaterialStatePropertyAll(
+                              backgroundColor: WidgetStatePropertyAll(Constants.primaryColor),
+                              shape: WidgetStatePropertyAll(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)
                                   )
@@ -283,6 +285,83 @@ class AddProducts extends StatelessWidget {
                           ),
                           onPressed: () {
                             cubit.uploadFertlizerData();
+                          },
+                          child: const Text("Save",style: TextStyle(color: Colors.white),)),
+                    )
+                  ],
+                ),
+                ListView(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    state is UploadImageLoading
+                        ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                        : cubit.scanImage.isNotEmpty
+                        ? Image.network(
+                      cubit.scanImage,
+                      height: 300,
+                      errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.error),
+                    )
+                        : const Center(child: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text("No Image Selected"),
+                    )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),                child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(Constants.primaryColor),
+                            shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)
+                                )
+                            )
+                        ),
+                        onPressed: () {
+                          cubit.pickImageFromGallery();
+                        },
+                        child: const Text("Upload Image",style: TextStyle(color: Colors.white))),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                      child: TextField(
+                        controller: cubit.dataSetNameController,
+                        decoration: const InputDecoration(
+                            hintStyle: TextStyle(color: Colors.grey),
+                            hintText: "Data Set Name"),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    state is AddDataSetLoading
+                        ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                        : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(Constants.primaryColor),
+                              shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)
+                                  )
+                              )
+                          ),
+                          onPressed: () {
+                            cubit.uploadDataSetData();
                           },
                           child: const Text("Save",style: TextStyle(color: Colors.white),)),
                     )

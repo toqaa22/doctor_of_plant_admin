@@ -1,4 +1,5 @@
 import 'package:doctor_plan_admin/cubit/get_products_cubit/get_products_cubit.dart';
+import 'package:doctor_plan_admin/models/data_set_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,8 +10,9 @@ import '../models/plant_model.dart';
 class DetailsPage extends StatelessWidget {
   final PlantModel? plant;
   final FertilizerModel? fertilizerModel;
+  final DataSetModel? dataSetModel;
 
-  const DetailsPage({super.key, this.plant, this.fertilizerModel});
+  const DetailsPage({super.key, this.plant, this.fertilizerModel,this.dataSetModel});
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +124,8 @@ class DetailsPage extends StatelessWidget {
                           child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
-                                  MaterialStatePropertyAll(Constants.primaryColor),
-                                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                  WidgetStatePropertyAll(Constants.primaryColor),
+                                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)))),
                               onPressed: () {
                                 cubit.updatePlant(
@@ -143,8 +145,8 @@ class DetailsPage extends StatelessWidget {
                           child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
-                                  const MaterialStatePropertyAll(Colors.redAccent),
-                                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                  const WidgetStatePropertyAll(Colors.redAccent),
+                                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)))),
                               onPressed: () {
                                 cubit.deletePlant(plant!.plantId!, context);
@@ -214,8 +216,8 @@ class DetailsPage extends StatelessWidget {
                       child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStatePropertyAll(Constants.primaryColor),
-                              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                  WidgetStatePropertyAll(Constants.primaryColor),
+                              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)))),
                           onPressed: () {
                             cubit.updateFertlizer(
@@ -235,8 +237,8 @@ class DetailsPage extends StatelessWidget {
                       child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor:
-                                  const MaterialStatePropertyAll(Colors.redAccent),
-                              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                  const WidgetStatePropertyAll(Colors.redAccent),
+                              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)))),
                           onPressed: () {
                             cubit.deleteFertlizer(fertilizerModel!.id!, context);

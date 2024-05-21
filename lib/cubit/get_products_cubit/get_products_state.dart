@@ -12,3 +12,5 @@ final class UpdateFertlizer extends GetProductsState {}
 final class GetAllPlantsLoading extends GetProductsState {}
 final class UpdatePlantLoading extends GetProductsState {}
 final class UpdateFertLoading extends GetProductsState {}
+final class GetAllDataSetLoading extends GetProductsState {}
+final class GetDataSets extends GetProductsState {}

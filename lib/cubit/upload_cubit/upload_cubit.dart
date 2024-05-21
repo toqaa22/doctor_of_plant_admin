@@ -10,6 +10,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/data_set_model.dart';
+
 part 'upload_state.dart';
 
 class UploadCubit extends Cubit<UploadState> {
@@ -27,6 +29,7 @@ class UploadCubit extends Cubit<UploadState> {
   TextEditingController fertlizerDescrpController = TextEditingController();
   TextEditingController fertlizerPriceController = TextEditingController();
   TextEditingController fertlizerTypeController = TextEditingController();
+  TextEditingController dataSetNameController = TextEditingController();
 
 
 
@@ -34,6 +37,7 @@ class UploadCubit extends Cubit<UploadState> {
   String scanImage = '';
   PlantModel? plant;
   FertilizerModel?fertilizer;
+  DataSetModel ?dataSet;
 
   Future<void> pickImageFromGallery() async {
     emit(UploadImageLoading());
@@ -44,7 +48,7 @@ class UploadCubit extends Cubit<UploadState> {
         final image = await value!.readAsBytes();
         await FirebaseStorage.instance
             .ref()
-            .child("plants/")
+            .child("plants/${DateTime.now()}/")
             .putData(
               image,
               SettableMetadata(contentType: 'image/png'),
@@ -131,6 +135,28 @@ class UploadCubit extends Cubit<UploadState> {
       fertlizerPriceController.clear();
       fertlizerDescrpController.clear();
       fertlizerTypeController.clear();
+      scanImage = '';
+    } catch (e) {
+      print("Error Fertlizer plant data: $e");
+    }
+  }
+  void uploadDataSetData() async {
+    emit(AddDataSetLoading());
+    String dataSetId = FirebaseFirestore.instance.collection('dataSet').doc().id;
+    dataSet = DataSetModel(
+       dataSetId:dataSetId ,
+      image: scanImage,
+      name: dataSetNameController.text,
+    );
+    try {
+      DocumentReference docRef =
+      FirebaseFirestore.instance.collection('dataSet').doc(dataSetId);
+      await docRef.set(dataSet!.toMap());
+      await docRef.update({'ref': docRef});
+
+      emit(AddProductSuccessfully());
+      showToast("DataSet Uploaded");
+      dataSetNameController.clear();
       scanImage = '';
     } catch (e) {
       print("Error Fertlizer plant data: $e");
