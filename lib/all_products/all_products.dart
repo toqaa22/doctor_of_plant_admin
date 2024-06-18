@@ -10,7 +10,8 @@ class AllProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    GetProductsCubit.get(context).getPlants();
+    GetProductsCubit.get(context).getFertilizers();
     return DefaultTabController(
       length: 2,
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
@@ -29,8 +30,7 @@ class AllProducts extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     shape: BoxShape.rectangle,
-                    border:
-                    Border.all(color: Constants.primaryColor, width: 1)),
+                    border: Border.all(color: Constants.primaryColor, width: 1)),
                 dividerColor: Colors.transparent,
                 unselectedLabelColor: Colors.grey,
                 labelColor: Constants.primaryColor,
@@ -38,8 +38,6 @@ class AllProducts extends StatelessWidget {
                 tabs: const [
                   Tab(text: 'All Fertlizers'),
                   Tab(text: 'All Plants'),
-
-
                 ],
               ),
             ),
@@ -50,12 +48,10 @@ class AllProducts extends StatelessWidget {
                   child: ListView.builder(
                       itemCount: cubit.fertilizers.length,
                       scrollDirection: Axis.vertical,
-                      physics: const NeverScrollableScrollPhysics(),
+                      // physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                            onTap: () {},
-                            child: PlantWidget(
-                                index: index, plantList: cubit.fertilizers));
+                            onTap: () {}, child: PlantWidget(index: index, plantList: cubit.fertilizers));
                       }),
                 ),
                 Padding(
@@ -66,19 +62,14 @@ class AllProducts extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                            onTap: () {},
-                            child: PlantWidget(
-                                index: index, plantList: cubit.plants));
+                            onTap: () {}, child: PlantWidget(index: index, plantList: cubit.plants));
                       }),
                 ),
-
-
               ],
             ),
           );
         },
       ),
     );
-
   }
 }

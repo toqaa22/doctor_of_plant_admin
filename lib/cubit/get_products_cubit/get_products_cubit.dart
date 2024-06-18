@@ -33,6 +33,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
     fertlizerPriceController.text = fertilizerModel.price.toString();
     fertlizerTypeController.text = fertilizerModel.type!;
   }
+
   void initializePlants(PlantModel plantModel) {
     plantNameController.text = plantModel.name!;
     plantDescrpController.text = plantModel.decription!;
@@ -45,52 +46,51 @@ class GetProductsCubit extends Cubit<GetProductsState> {
 
   void getFertilizers() {
     emit(GetAllFertilizersLoading());
-    FirebaseFirestore.instance
-        .collection('fertilizer')
-        .get()
-        .then((value) async {
+    FirebaseFirestore.instance.collection('fertilizer').get().then((value) async {
       fertilizers.clear();
       for (var element in value.docs) {
-        fertilizers.add(FertilizerModel.fromJson(element.data(),));
+        fertilizers.add(FertilizerModel.fromJson(
+          element.data(),
+        ));
       }
       emit(GetFertlizers());
     }).catchError((onError) {});
   }
+
   void getPlants() {
+    print('fjd');
     emit(GetAllPlantsLoading());
-    FirebaseFirestore.instance
-        .collection('plants')
-        .get()
-        .then((value) async {
+    FirebaseFirestore.instance.collection('plants').get().then((value) async {
       plants.clear();
       for (var element in value.docs) {
-        plants.add(PlantModel.fromJson(element.data(),));
+        plants.add(PlantModel.fromJson(
+          element.data(),
+        ));
       }
       emit(GetPlants());
     }).catchError((onError) {});
   }
 
-  void updateFertlizer(String fertlizerId, FertilizerModel fertilizerModel,BuildContext context) async{
+  void updateFertlizer(String fertlizerId, FertilizerModel fertilizerModel, BuildContext context) async {
     emit(UpdateFertLoading());
-    var fertlizerDoc =
-        FirebaseFirestore.instance.collection('fertilizer').doc(fertlizerId);
+    var fertlizerDoc = FirebaseFirestore.instance.collection('fertilizer').doc(fertlizerId);
     fertlizerDoc.update({
       'name': fertlizerNameController.text,
       'type': fertlizerTypeController.text,
-      'price': num.tryParse(fertlizerPriceController.text),
+      'price': int.parse(fertlizerPriceController.text),
       'description': fertlizerDescrpController.text,
     }).then((value) {
-       initializeFertlizers(fertilizerModel);
+      initializeFertlizers(fertilizerModel);
       emit(UpdateFertlizer());
       GetFertlizers();
-       showToast("Data Updated");
-       Navigator.pop(context);
+      showToast("Data Updated");
+      Navigator.pop(context);
     });
   }
-  void updatePlant(String plantID, PlantModel plantModel,BuildContext context) async{
+
+  void updatePlant(String plantID, PlantModel plantModel, BuildContext context) async {
     emit(UpdatePlantLoading());
-    var plantDoc =
-   FirebaseFirestore.instance.collection('plants').doc(plantID);
+    var plantDoc = FirebaseFirestore.instance.collection('plants').doc(plantID);
     plantDoc.update({
       'plantName': plantNameController.text,
       'category': plantCategoryController.text,
@@ -108,13 +108,14 @@ class GetProductsCubit extends Cubit<GetProductsState> {
     });
   }
 
-  void deleteFertlizer(String fertlizeID,BuildContext context)async{
+  void deleteFertlizer(String fertlizeID, BuildContext context) async {
     await FirebaseFirestore.instance.collection('fertilizer').doc(fertlizeID).delete();
     getFertilizers();
     showToast("Fertlizer Deleted");
     Navigator.pop(context);
   }
-  void deletePlant(String plantId,BuildContext context)async{
+
+  void deletePlant(String plantId, BuildContext context) async {
     await FirebaseFirestore.instance.collection('plants').doc(plantId).delete();
     getPlants();
     showToast("Plant Deleted");
