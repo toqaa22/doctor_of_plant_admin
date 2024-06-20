@@ -59,7 +59,6 @@ class AllProducts extends StatelessWidget {
                   child: ListView.builder(
                       itemCount: cubit.plants.length,
                       scrollDirection: Axis.vertical,
-                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                             onTap: () {}, child: PlantWidget(index: index, plantList: cubit.plants));
